@@ -1,3 +1,4 @@
+using System.Linq;
 using Configgy;
 
 namespace StartingWeaponSwap;
@@ -5,7 +6,7 @@ namespace StartingWeaponSwap;
 public class StartingWeaponAttributes : MonoSingleton<StartingWeaponAttributes> {
 
     private static readonly string[] WEAPON_TYPES = {"rev", "sho", "nai", "rai", "rock"};
-    private static readonly string[] WEAPON_TYPE_NAMES = {"REVOLVER", "SHOTGUN", "NAILGUN", "RAILGUN", "ROCKET LAUNCHER"};
+    private static readonly string[] WEAPON_TYPE_NAMES = {"REVOLVER", "SHOTGUN", "NAILGUN", "RAILCANNON", "ROCKET LAUNCHER"};
     [Configgable(null, "Weapon Type:")]
     private static readonly ConfigDropdown<string> weaponToStartWith =
                                 new(
@@ -24,6 +25,7 @@ public class StartingWeaponAttributes : MonoSingleton<StartingWeaponAttributes> 
                                     VARIATION_TYPE_NAMES,
                                     0
                                 );
+
 
     [Configgable(null, "Start with alternate weapon?")]
     private static ConfigToggle startWithAlt = new(false);
@@ -50,6 +52,9 @@ public class StartingWeaponAttributes : MonoSingleton<StartingWeaponAttributes> 
     }
 
     public bool IsAltWeaponSelected() {
+        // Si el arma elegida es una de las que no tienen alt, se devuelve false
+        if (weaponToStartWith.GetValue() == "rai" || weaponToStartWith.GetValue() == "rock")
+            return false;
         return startWithAlt.GetValue();
     }
 
