@@ -18,9 +18,12 @@ internal class SetCustomStartingWeapon
         // Esto implica que el arma que se va a obtener es el revolver del pedestal inicial
         // Si no es el primer nivel, se continua con la ejecución normal
         if (SceneHelper.CurrentScene != "Level 0-1")
-        {
             return true;
-        }
+
+        // Si está seleccionado Weaponless, no hacer nada
+        // Esto es, no se recibe arma
+        if (Configurator.IsWeaponlessSelected())
+            return false;
 
         // Desbloquear el arma elegida en las opciones al save
         GameProgressSaver.AddGear(Configurator.GetStartingWeapon());
