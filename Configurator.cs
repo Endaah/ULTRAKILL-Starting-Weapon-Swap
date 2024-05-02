@@ -33,6 +33,7 @@ internal class Configurator {
 
         // Inicializar una division para el resto de campos
         division = new ConfigDivision(config.rootPanel, "division");
+        division.hidden = weaponless.value;
 
         // Inicializar los campos de seleccion de arma, variante y alt
         weaponType = new EnumField<WeaponType>(division, "Weapon Type:", "dropdownWeaponType", WeaponType.REVOLVER);
@@ -46,7 +47,7 @@ internal class Configurator {
 
     // Devuelve la ID completa del arma seleccionada en la configuración
     public static string GetStartingWeapon() {
-        return GetWeaponID() + GetVariantID();    
+        return GetWeaponID() + GetVariantID();
     }
 
     private static string GetWeaponID() {
