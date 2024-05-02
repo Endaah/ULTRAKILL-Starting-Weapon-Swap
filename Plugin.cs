@@ -1,6 +1,8 @@
 ﻿using BepInEx;
-using Configgy;
+using BepInEx.Bootstrap;
+using PluginConfig.API;
 using HarmonyLib;
+using System.Runtime.CompilerServices;
 
 namespace StartingWeaponSwap;
 
@@ -10,6 +12,8 @@ namespace StartingWeaponSwap;
 public class Plugin : BaseUnityPlugin
 {
 
+    private PluginConfigurator config;
+
     private void Awake()
     {
         // Plugin startup logic
@@ -18,7 +22,8 @@ public class Plugin : BaseUnityPlugin
         // Harmony
         new Harmony(MyPluginInfo.PLUGIN_GUID).PatchAll();
 
-        // Configgy
-        new ConfigBuilder("com.ender.startingweaponswap", MyPluginInfo.PLUGIN_NAME).BuildAll();
+        // PluginConfigurator
+        config = PluginConfigurator.Create("Starting Weapon Swap", "com.ender.startingweaponswap");
+        Configurator.BuildMenu(config);
     }
 }

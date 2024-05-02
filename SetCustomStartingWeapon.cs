@@ -22,28 +22,20 @@ internal class SetCustomStartingWeapon
             return true;
         }
 
-        // Se ha activado el trigger del pedestal
-        // Enviar mensaje de Debug
-        var myLogSource = BepInEx.Logging.Logger.CreateLogSource("MyLogSource");
-        myLogSource.LogInfo("Activado weapon pickup del revolver");
-        BepInEx.Logging.Logger.Sources.Remove(myLogSource);
-
-        StartingWeaponAttributes config = MonoSingleton<StartingWeaponAttributes>.Instance;
-
         // Desbloquear el arma elegida en las opciones al save
-        GameProgressSaver.AddGear(config.GetStartingWeapon());
+        GameProgressSaver.AddGear(Configurator.GetStartingWeapon());
 
         // Si se selecciona el arma alternativa, se desbloquea también y se establece en las preferencias como activa
         // Si no, se establece como activa el arma normal
-        if (config.IsAltWeaponSelected()) {
-            GameProgressSaver.AddGear(config.GetAltWeaponID());
-            MonoSingleton<PrefsManager>.Instance.SetInt("weapon." + config.GetStartingWeapon(), 2);
+        if (Configurator.IsAltWeaponSelected()) {
+            GameProgressSaver.AddGear(Configurator.GetAltWeaponID());
+            MonoSingleton<PrefsManager>.Instance.SetInt("weapon." + Configurator.GetStartingWeapon(), 2);
         } else
-            MonoSingleton<PrefsManager>.Instance.SetInt("weapon." + config.GetStartingWeapon(), 1);
+            MonoSingleton<PrefsManager>.Instance.SetInt("weapon." + Configurator.GetStartingWeapon(), 1);
 
         // Se actualiza el arsenal y se fuerza a la mano el arma seleccionada
         MonoSingleton<GunSetter>.Instance.ResetWeapons();
-        MonoSingleton<GunSetter>.Instance.ForceWeapon(config.GetStartingWeapon());
+        MonoSingleton<GunSetter>.Instance.ForceWeapon(Configurator.GetStartingWeapon());
 
         return false;
     }
