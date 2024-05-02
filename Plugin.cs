@@ -8,7 +8,6 @@ namespace StartingWeaponSwap;
 
 [BepInPlugin("com.ender.startingweaponswap", MyPluginInfo.PLUGIN_NAME, MyPluginInfo.PLUGIN_VERSION)]
 [BepInProcess("ULTRAKILL.exe")]
-[BepInDependency("com.eternalUnion.pluginConfigurator")]
 public class Plugin : BaseUnityPlugin
 {
 
